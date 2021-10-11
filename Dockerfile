@@ -6,6 +6,12 @@ LABEL maintainer="Andy Cungkrinx <andy.silva270114@gmail.com>" \
     version.alpine="3.12" \
     version.php="7.3" 
 
+# Add user
+RUN mkdir /var/www; \
+    addgroup -S app; \
+    adduser -S -D -H -h /home/app -s /sbin/sh -G app app; \
+    chown app:app /var/www -R;
+
 # Install packages 
 RUN apk --no-cache update; \
     apk --no-cache add \
