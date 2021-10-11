@@ -51,6 +51,7 @@ RUN apk --no-cache update; \
     php7-sodium \
     php7-intl \
     php7-imap \
+    php7-opcache \
     zlib \
     libpng \
     musl \
