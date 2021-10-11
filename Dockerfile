@@ -68,7 +68,7 @@ RUN apk --no-cache update; \
     \
     # Install Ioncube
     cd /tmp; \
-    wget http://downloads3.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64_10.4.1.tar.gz; \
+    wget http://downloads3.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64_10.4.5.tar.gz; \
     tar -zxvf ioncube_loaders*; \
     cp /tmp/ioncube/ioncube_loader_lin_7.4.so /usr/lib/php7/modules/ioncube_loader_lin_7.4.so; \
     \
