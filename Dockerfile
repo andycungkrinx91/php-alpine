@@ -1,10 +1,10 @@
-ARG BASE_IMAGE_TAG=3.12
+ARG BASE_IMAGE_TAG=3.14
 
 FROM alpine:${BASE_IMAGE_TAG}
 
 LABEL maintainer="Andy Cungkrinx <andy.silva270114@gmail.com>" \
-    version.alpine="3.12" \
-    version.php="7.3" 
+    version.alpine="3.14" \
+    version.php="7.4" 
 
 # Add user
 RUN mkdir /var/www; \
@@ -70,7 +70,7 @@ RUN apk --no-cache update; \
     cd /tmp; \
     wget http://downloads3.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64_10.4.1.tar.gz; \
     tar -zxvf ioncube_loaders*; \
-    cp /tmp/ioncube/ioncube_loader_lin_7.3.so /usr/lib/php7/modules/ioncube_loader_lin_7.3.so; \
+    cp /tmp/ioncube/ioncube_loader_lin_7.4.so /usr/lib/php7/modules/ioncube_loader_lin_7.4.so; \
     \
     # Install Mcrypt
     apk add --no-cache -t .build-deps \
