@@ -8,8 +8,8 @@ LABEL maintainer="Andy Cungkrinx <andy.silva270114@gmail.com>" \
 
 # Add user
 RUN mkdir /var/www; \
-    addgroup -S app; \
-    adduser -S -D -H -h /home/app -s /sbin/sh -G app app; \
+    addgroup -S app -g 1000; \
+    adduser -u 1000 -h /home/app -s /bin/ash -G app -S app; \
     chown app:app /var/www -R;
 
 # Install packages 
