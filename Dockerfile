@@ -88,15 +88,13 @@ COPY config/php.ini /etc/php7/php.ini
 COPY config/fpm/php-fpm.conf /etc/php7/php-fpm.conf
 COPY config/fpm/www.conf /etc/php7/php-fpm.d/www.conf
 COPY config/custom.ini /etc/php7/conf.d/custom.ini
+COPY --chown=app:app config/.ashrc /home/app/.ashrc
 
 RUN apk del \
     wget \
     tar; \
     rm -rf /var/cache/apk/*; \
     rm -rf /tmp/*; \
-    ln -sf /dev/stdout /var/log/php7/access.log; \
-    ln -sf /dev/stdout /var/log/php7/slow.log; \
-    ln -sf /dev/stderr /var/log/php7/error.log; \
     cat /dev/null > /root/.ash_history && exit;
 
 CMD ["php-fpm7", "-F"]
