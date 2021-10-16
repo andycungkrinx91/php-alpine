@@ -56,8 +56,3 @@ Dockerize PHP base on alpine
 - IonCube PHP Loader + ionCube24
 
 ```
-
-## How to build
-```sh
-- ./build.sh
-```

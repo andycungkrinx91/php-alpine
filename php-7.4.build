@@ -4,7 +4,9 @@ FROM alpine:${BASE_IMAGE_TAG}
 
 LABEL maintainer="Andy Cungkrinx <andy.silva270114@gmail.com>" \
     version.alpine="3.14" \
-    version.php="7.4" 
+    version.php="7.4"
+
+ARG php_version="7.4"
 
 # Add user
 RUN mkdir /var/www; \
@@ -70,7 +72,7 @@ RUN apk --no-cache update; \
     cd /tmp; \
     wget http://downloads3.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64_10.4.5.tar.gz; \
     tar -zxvf ioncube_loaders*; \
-    cp /tmp/ioncube/ioncube_loader_lin_7.4.so /usr/lib/php7/modules/ioncube_loader_lin_7.4.so; \
+    cp /tmp/ioncube/ioncube_loader_lin_${php_version}.so /usr/lib/php7/modules/ioncube_loader_lin_${php_version}.so; \
     \
     # Install Mcrypt
     apk add --no-cache -t .build-deps \
@@ -84,10 +86,10 @@ RUN apk --no-cache update; \
     echo "extension=mcrypt.so" > /etc/php7/conf.d/00_mcrypt.ini; \
     apk del --purge .build-deps
 # Copy Config for php
-COPY config/php.ini /etc/php7/php.ini
-COPY config/fpm/php-fpm.conf /etc/php7/php-fpm.conf
-COPY config/fpm/www.conf /etc/php7/php-fpm.d/www.conf
-COPY config/custom.ini /etc/php7/conf.d/custom.ini
+COPY config/php-${php_version}/php.ini /etc/php7/php.ini
+COPY config/php-${php_version}/fpm/php-fpm.conf /etc/php7/php-fpm.conf
+COPY config/php-${php_version}/fpm/www.conf /etc/php7/php-fpm.d/www.conf
+COPY config/php-${php_version}/custom.ini /etc/php7/conf.d/custom.ini
 COPY --chown=app:app config/.ashrc /home/app/.ashrc
 
 RUN apk del \
