@@ -69,9 +69,8 @@ RUN apk --no-cache update; \
     cd /tmp; \
     wget http://downloads3.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64_10.4.5.tar.gz; \
     tar -zxvf ioncube_loaders*; \
-    cp /tmp/ioncube/ioncube_loader_lin_${php_version}.so /usr/lib/php7/modules/ioncube_loader_lin_${php_version}.so; \
-    \
-    apk del --purge .build-deps
+    cp /tmp/ioncube/ioncube_loader_lin_${php_version}.so /usr/lib/php7/modules/ioncube_loader_lin_${php_version}.so;
+    
 # Copy Config for php
 COPY config/php-${php_version}/php.ini /etc/php7/php.ini
 COPY config/php-${php_version}/fpm/php-fpm.conf /etc/php7/php-fpm.conf
