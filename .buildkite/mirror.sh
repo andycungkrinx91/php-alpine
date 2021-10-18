@@ -1,4 +1,5 @@
 #!/bin/bash
+git config --global user.name "andycungkrinx91"
 ts=$(date +%s)
 githead=$(git rev-parse HEAD)
 branch=$githead-$ts
