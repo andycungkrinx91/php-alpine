@@ -7,6 +7,7 @@ LABEL maintainer="Andy Cungkrinx <andy.silva270114@gmail.com>" \
     version.php="7.1"
 
 ARG php_version="7.1"
+ARG composer_version="2.2.24"
 
 # Add user
 RUN mkdir /var/www; \
@@ -71,6 +72,10 @@ RUN apk --no-cache update; \
     tar -zxvf ioncube_loaders*; \
     cp /tmp/ioncube/ioncube_loader_lin_${php_version}.so /usr/lib/php7/modules/ioncube_loader_lin_${php_version}.so;
     
+# Install composer
+RUN cd /tmp; \
+    curl -sS https://getcomposer.org/installer | php -- --version=${composer_version} --install-dir=/usr/local/bin --filename=composer;
+
 # Copy Config for php
 COPY config/php-${php_version}/php.ini /etc/php7/php.ini
 COPY config/php-${php_version}/fpm/php-fpm.conf /etc/php7/php-fpm.conf

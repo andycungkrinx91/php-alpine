@@ -7,6 +7,7 @@ LABEL maintainer="Andy Cungkrinx <andy.silva270114@gmail.com>" \
     version.php="8.2"
 
 ARG php_version="8.2"
+ARG composer_version="2.6.6"
 
 # Add user
 RUN mkdir /var/www; \
@@ -89,6 +90,10 @@ RUN apk --no-cache update; \
     echo "extension=mcrypt.so" > /etc/php82/conf.d/00_mcrypt.ini; \
     echo "extension=xmlrpc.so" > /etc/php82/conf.d/00_xmlrpc.ini; \
     apk del --purge .build-deps
+
+# Install composer
+RUN cd /tmp; \
+    curl -sS https://getcomposer.org/installer | php -- --version=${composer_version} --install-dir=/usr/local/bin --filename=composer;
 
 # Copy Config for php
 COPY config/php-8.2/php.ini /etc/php82/php.ini

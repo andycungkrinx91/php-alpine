@@ -7,6 +7,7 @@ LABEL maintainer="Andy Cungkrinx <andy.silva270114@gmail.com>" \
     version.php="7.4"
 
 ARG php_version="7.4"
+    ARG composer_version="2.6.6"
 
 # Add user
 RUN mkdir /var/www; \
@@ -85,6 +86,11 @@ RUN apk --no-cache update; \
     pecl install mcrypt-1.0.7; \
     echo "extension=mcrypt.so" > /etc/php7/conf.d/00_mcrypt.ini; \
     apk del --purge .build-deps
+
+# Install composer
+RUN cd /tmp; \
+    curl -sS https://getcomposer.org/installer | php -- --version=${composer_version} --install-dir=/usr/local/bin --filename=composer;
+
 # Copy Config for php
 COPY config/php-${php_version}/php.ini /etc/php7/php.ini
 COPY config/php-${php_version}/fpm/php-fpm.conf /etc/php7/php-fpm.conf
