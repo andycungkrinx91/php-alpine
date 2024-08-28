@@ -105,7 +105,7 @@ RUN apk del \
     rm -rf /tmp/*; \
     cat /dev/null > /root/.ash_history && exit;
 
-CMD ["php-fpm82", "-F"]
+CMD ["php-fpm81", "-F"]
 USER app
 WORKDIR /var/www
 EXPOSE 9000

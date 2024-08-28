@@ -91,10 +91,10 @@ RUN apk --no-cache update; \
     apk del --purge .build-deps
 
 # Copy Config for php
-COPY config/php-8.2/php.ini /etc/php83/php.ini
-COPY config/php-8.2/fpm/php-fpm.conf /etc/php83/php-fpm.conf
-COPY config/php-8.2/fpm/www.conf /etc/php83/php-fpm.d/www.conf
-COPY config/php-8.2/custom.ini /etc/php83/conf.d/custom.ini
+COPY config/php-8.3/php.ini /etc/php83/php.ini
+COPY config/php-8.3/fpm/php-fpm.conf /etc/php83/php-fpm.conf
+COPY config/php-8.3/fpm/www.conf /etc/php83/php-fpm.d/www.conf
+COPY config/php-8.3/custom.ini /etc/php83/conf.d/custom.ini
 COPY --chown=app:app config/.ashrc-83 /home/app/.ashrc
 COPY config/.ashrc-83 /root/.ashrc
 
@@ -105,7 +105,7 @@ RUN apk del \
     rm -rf /tmp/*; \
     cat /dev/null > /root/.ash_history && exit;
 
-CMD ["php-fpm82", "-F"]
+CMD ["php-fpm83", "-F"]
 USER app
 WORKDIR /var/www
 EXPOSE 9000
