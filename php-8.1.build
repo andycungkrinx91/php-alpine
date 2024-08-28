@@ -84,7 +84,7 @@ RUN apk --no-cache update; \
     libxml2-dev \
     libxml2 \
     musl-dev; \
-    pecl install mcrypt-1.0.5; \
+    pecl install mcrypt-1.0.7; \
     pecl install channel://pecl.php.net/xmlrpc-1.0.0RC3; \
     echo "extension=mcrypt.so" > /etc/php81/conf.d/00_mcrypt.ini; \
     echo "extension=xmlrpc.so" > /etc/php81/conf.d/00_xmlrpc.ini; \
@@ -96,7 +96,7 @@ COPY config/php-8.1/fpm/php-fpm.conf /etc/php81/php-fpm.conf
 COPY config/php-8.1/fpm/www.conf /etc/php81/php-fpm.d/www.conf
 COPY config/php-8.1/custom.ini /etc/php81/conf.d/custom.ini
 COPY --chown=app:app config/.ashrc-81 /home/app/.ashrc
-COPY --chown=app:app config/.ashrc-81 /root/.ashrc
+COPY config/.ashrc-81 /root/.ashrc
 
 RUN apk del \
     wget \

@@ -82,7 +82,7 @@ RUN apk --no-cache update; \
     libmcrypt-dev \
     libc-dev \
     musl-dev; \
-    pecl install mcrypt-1.0.1; \
+    pecl install mcrypt-1.0.7; \
     echo "extension=mcrypt.so" > /etc/php7/conf.d/00_mcrypt.ini; \
     apk del --purge .build-deps
 # Copy Config for php
