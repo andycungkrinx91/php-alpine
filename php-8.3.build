@@ -1,0 +1,111 @@
+ARG BASE_IMAGE_TAG=3.20
+
+FROM alpine:${BASE_IMAGE_TAG}
+
+LABEL maintainer="Andy Cungkrinx <andy.silva270114@gmail.com>" \
+    version.alpine="3.20" \
+    version.php="8.3"
+
+ARG php_version="8.3"
+
+# Add user
+RUN mkdir /var/www; \
+    addgroup -S app -g 1000; \
+    adduser -u 1000 -h /home/app -s /bin/ash -G app -S app; \
+    chown app:app /var/www -R; \
+    echo "104.236.228.160 pecl.php.net";
+
+# Install packages 
+RUN apk --no-cache update; \
+    apk --no-cache add \
+	php83 \
+	php83-fpm \
+	php83-common \
+	php83-pear \
+	php83-tokenizer \
+	php83-phpdbg \
+    php83-pdo_mysql \
+    php83-xsl \
+    php83-dev \
+    php83-mbstring \
+    php83-xmlreader \
+    php83-xmlwriter \
+    php83-opcache \
+    php83-ldap \
+    php83-posix \
+    php83-session \
+    php83-gd \
+    php83-json \
+    php83-xml \
+    php83-curl \
+    php83-phar \
+    php83-iconv \
+    php83-zip \
+    php83-cgi \
+    php83-bcmath \
+    php83-dom \
+    php83-soap \
+    php83-sockets \
+    php83-pdo \
+    php83-bz2 \
+    php83-mysqli \
+    php83-odbc \
+    php83-sodium \
+    php83-intl \
+    php83-imap \
+    php83-opcache \
+    zlib \
+    libpng \
+    musl \
+    libmcrypt \
+    openssl \
+    tzdata \
+    wget \
+    tar \
+    curl \
+    openssh \
+    jpegoptim \
+    optipng \
+    gifsicle; \
+    \
+    # Install Ioncube
+    cd /tmp; \
+    wget https://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz; \
+    tar -zxvf ioncube_loaders*; \
+    cp /tmp/ioncube/ioncube_loader_lin_8.3.so /usr/lib/php83/modules/ioncube_loader_lin_${php_version}.so; \
+    \
+    # Install php-mcrypt & php-xmlrpc
+    apk add --no-cache -t .build-deps \
+    gcc \
+    make \
+    autoconf \
+    libmcrypt-dev \
+    libxml2-dev \
+    libxml2 \
+    libc-dev \
+    musl-dev; \
+    pecl install mcrypt-1.0.5; \
+    pecl install channel://pecl.php.net/xmlrpc-1.0.0RC3; \
+    echo "extension=mcrypt.so" > /etc/php83/conf.d/00_mcrypt.ini; \
+    echo "extension=xmlrpc.so" > /etc/php83/conf.d/00_xmlrpc.ini; \
+    apk del --purge .build-deps
+
+# Copy Config for php
+COPY config/php-8.2/php.ini /etc/php83/php.ini
+COPY config/php-8.2/fpm/php-fpm.conf /etc/php83/php-fpm.conf
+COPY config/php-8.2/fpm/www.conf /etc/php83/php-fpm.d/www.conf
+COPY config/php-8.2/custom.ini /etc/php83/conf.d/custom.ini
+COPY --chown=app:app config/.ashrc-83 /home/app/.ashrc
+COPY --chown=app:app config/.ashrc-83 /root/.ashrc
+
+RUN apk del \
+    wget \
+    tar; \
+    rm -rf /var/cache/apk/*; \
+    rm -rf /tmp/*; \
+    cat /dev/null > /root/.ash_history && exit;
+
+CMD ["php-fpm82", "-F"]
+USER app
+WORKDIR /var/www
+EXPOSE 9000
